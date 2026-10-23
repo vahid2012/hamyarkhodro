@@ -14,39 +14,54 @@ const nextConfig = {
   
   async redirects() {
     return [
-      // ریدایرکت‌های شهرها
-      { source: '/amdad/:slug', destination: '/emdad-khodro-:slug', permanent: true },
-      { source: '/amdad-khodro-:slug', destination: '/emdad-khodro-:slug', permanent: true },
+      // --- ۱. ریدایرکت‌های شهرها ---
+      {
+        source: '/amdad/:slug',
+        destination: '/emdad-khodro-:slug',
+        permanent: true,
+      },
+      {
+        source: '/amdad-khodro-:slug',
+        destination: '/emdad-khodro-:slug',
+        permanent: true,
+      },
       
-      // ریدایرکت سرویس‌ها از مسیر /services به ریشه
-      { source: '/services/:slug', destination: '/:slug', permanent: true },
+      // --- ۲. ریدایرکت‌های سرویس‌ها از /services/ به ریشه ---
+      // آدرس اشتباه با A را به آدرس درست با E هدایت می‌کنیم
+      {
+        source: '/services/amdad-khodro',
+        destination: '/emdad-khodro',
+        permanent: true,
+      },
+      // بقیه سرویس‌ها را با یک قاعده کلی به ریشه منتقل می‌کنیم
+      {
+        source: '/services/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
     ];
   },
 
   async rewrites() {
     return {
       beforeFiles: [
-        // ری‌رایت‌های شهرها
-        { source: '/emdad-khodro-:slug', destination: '/city/:slug' },
+        // --- ۱. ری‌رایت‌های شهرها ---
+        {
+          source: '/emdad-khodro-:slug',
+          destination: '/city/:slug',
+        },
         
-        // --- ری‌رایت‌های سرویس‌ها ---
-        // سرویس‌هایی که قبلاً کار می‌کردند (همان اسلاگ‌ها)
-        { source: '/yadak-kesh', destination: '/services/yadak-kesh' },
-        { source: '/jarsaghil', destination: '/services/jarsaghil' },
-        { source: '/haml-khodro-sefr', destination: '/services/haml-khodro-sefr' },
-
-        // سرویس‌هایی که خطا می‌دادند (مسیر جدید را به مسیر قدیمیِ دیتابیس وصل می‌کنیم)
-        // ۱. امداد خودرو (آدرس جدید با E، آدرس قدیمی با A)
-        { source: '/emdad-khodro', destination: '/services/amdad-khodro' },
-        
-        // ۲. خودروبر (احتمالاً بدون خط تیره در دیتابیس است)
-        { source: '/khodro-bar', destination: '/services/khodrobar' },
-        
-        // ۳. باتری به باتری (احتمالاً اسلاگ متفاوتی دارد)
-        { source: '/batri-be-batri', destination: '/services/batri-be-batri' },
-        
-        // ۴. پنجرگیری
-        { source: '/panchar-giri', destination: '/services/panchar-giri' },
+        // --- ۲. ری‌رایت‌های سرویس‌ها ---
+        // آدرس تمیز با E را می‌گیریم و به دیتای با A وصل می‌کنیم
+        {
+          source: '/emdad-khodro',
+          destination: '/services/amdad-khodro',
+        },
+        // بقیه سرویس‌ها دقیقاً با همان اسلاگ‌های موجود در فایل services.ts
+        {
+          source: '/:slug(yadak-kesh|jarsaghil|khodro-bor|battery|pancher|haml-khodro-sefr)',
+          destination: '/services/:slug',
+        },
       ],
     };
   },
