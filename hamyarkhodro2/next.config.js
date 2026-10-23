@@ -11,24 +11,32 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.pixabay.com' },
     ],
   },
-  
-  // ۱. ریدایرکت دائمی از آدرس قدیمی به جدید (برای حفظ سئو)
+
   async redirects() {
     return [
+      // هدایت لینک‌های قدیمی (/amdad/tehran) به لینک جدید
       {
         source: '/amdad/:slug',
-        destination: '/amdad-khodro-:slug',
-        permanent: true, // کد 308 که معادل 301 است
+        destination: '/emdad-khodro-:slug',
+        permanent: true,
+      },
+      // هدایت لینک‌های اشتباه ساخته‌شده (/amdad-khodro-tehran) به لینک صحیح
+      {
+        source: '/amdad-khodro-:slug',
+        destination: '/emdad-khodro-:slug',
+        permanent: true,
       },
     ];
   },
 
-  // ۲. اتصال آدرس جدید به پوشه داینامیک city
   async rewrites() {
     return {
-      afterFiles: [
-        // آدرس جدید (amdad-khodro-tehran) را به (city/tehran) وصل می‌کند
-        { source: '/amdad-khodro-:slug*', destination: '/city/:slug*' },
+      // استفاده از beforeFiles برای اطمینان از بررسی قبل از مسیرهای داینامیک
+      beforeFiles: [
+        {
+          source: '/emdad-khodro-:slug',
+          destination: '/city/:slug',
+        },
       ],
     };
   },
