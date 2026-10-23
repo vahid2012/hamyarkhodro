@@ -14,7 +14,7 @@ const nextConfig = {
   
   async redirects() {
     return [
-      // --- ۱. ریدایرکت‌های شهرها ---
+      // --- ریدایرکت‌های شهرها ---
       {
         source: '/amdad/:slug',
         destination: '/emdad-khodro-:slug',
@@ -26,14 +26,20 @@ const nextConfig = {
         permanent: true,
       },
       
-      // --- ۲. ریدایرکت‌های سرویس‌ها از /services/ به ریشه ---
-      // آدرس اشتباه با A را به آدرس درست با E هدایت می‌کنیم
+      // --- ریدایرکت‌های سرویس‌ها ---
+      // امداد خودرو (A به E)
       {
         source: '/services/amdad-khodro',
         destination: '/emdad-khodro',
         permanent: true,
       },
-      // بقیه سرویس‌ها را با یک قاعده کلی به ریشه منتقل می‌کنیم
+      // خودروبر (طبق گفته شما بدون خط تیره)
+      {
+        source: '/services/khodrobar',
+        destination: '/khodrobar',
+        permanent: true,
+      },
+      // بقیه سرویس‌ها
       {
         source: '/services/:slug',
         destination: '/:slug',
@@ -45,21 +51,34 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        // --- ۱. ری‌رایت‌های شهرها ---
+        // --- ری‌رایت‌های شهرها ---
         {
           source: '/emdad-khodro-:slug',
           destination: '/city/:slug',
         },
         
-        // --- ۲. ری‌رایت‌های سرویس‌ها ---
-        // آدرس تمیز با E را می‌گیریم و به دیتای با A وصل می‌کنیم
+        // --- ری‌رایت‌های سرویس‌ها (به صورت تفکیک‌شده برای جلوگیری از خطا) ---
+        
+        // ۱. امداد خودرو
         {
           source: '/emdad-khodro',
           destination: '/services/amdad-khodro',
         },
-        // بقیه سرویس‌ها دقیقاً با همان اسلاگ‌های موجود در فایل services.ts
+        
+        // ۲. خودروبر (آدرس تمیز /khodrobar به اسلاگ اصلی وصل می‌شود)
         {
-          source: '/:slug(yadak-kesh|jarsaghil|khodro-bor|battery|pancher|haml-khodro-sefr)',
+          source: '/khodrobar',
+          destination: '/services/khodrobar',
+        },
+        // (اختیاری) اگر کسی آدرس با خط تیره را تایپ کرد، به همان دیتا وصل شود
+        {
+          source: '/khodro-bar',
+          destination: '/services/khodrobar', 
+        },
+
+        // ۳. بقیه سرویس‌ها با قاعده کلی (خودروبر از این لیست حذف شد)
+        {
+          source: '/:slug(yadak-kesh|jarsaghil|battery|pancher|haml-khodro-sefr)',
           destination: '/services/:slug',
         },
       ],
