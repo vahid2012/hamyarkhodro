@@ -40,7 +40,10 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const desc = isSpecial
     ? `امداد خودرو، یدک کش، جرثقیل و خودروبر شبانه‌روزی در ${city.name} ${provName} با شماره 09032486073. اعزام زیر ۲۰ دقیقه. تماس فوری.`
     : `امداد خودرو و یدک کش در ${city.name} ${provName} با شماره 09032486073؛ امداد خودرو شبانه‌روزی، جرثقیل، خودروبر و باتری به باتری در ${city.name}.`;
-  const urlPath = `/amdad/${city.slug}`;
+  
+  // 🔴 تغییر ۱: اصلاح مسیر در تگ Canonical و OpenGraph
+  const urlPath = `/emdad-khodro-${city.slug}`; 
+
   return {
     title,
     description: desc,
@@ -73,7 +76,9 @@ export default function CityPage({ params }: { params: { slug: string } }) {
 
   const prices = cityPriceTable(city.name);
   const whyList = cityWhySection(city.name);
-  const urlPath = `/amdad/${city.slug}`;
+  
+  // 🔴 تغییر ۲: اصلاح مسیر برای اسکیمای Breadcrumb
+  const urlPath = `/emdad-khodro-${city.slug}`; 
 
   const h1 = isSpecial
     ? `امداد خودرو و یدک کش ${city.name} | ۲۴ ساعته | 09032486073`
@@ -200,7 +205,7 @@ export default function CityPage({ params }: { params: { slug: string } }) {
               {TEHRAN_CITIES.filter((c) => c.slug !== city.slug).map((c) => (
                 <Link
                   key={c.slug}
-                  href={`/amdad/${c.slug}`}
+                  href={`/emdad-khodro-${c.slug}`} // 🔴 تغییر ۳: اصلاح لینک‌های داخلی به سایر شهرها
                   className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-brand-red/40 hover:text-brand-red"
                 >
                   {c.name}
