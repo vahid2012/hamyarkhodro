@@ -22,6 +22,13 @@ const ICONS: Record<string, LucideIcon> = {
   PackageCheck,
 };
 
+// تابعی برای تولید آدرس جدید سرویس‌ها
+const getServiceUrl = (slug: string) => {
+  if (slug === 'amdad-khodro') return '/emdad-khodro';
+  if (slug === 'khodro-bor') return '/khodrobar';
+  return `/${slug}`;
+};
+
 export default function ServiceCards() {
   return (
     <section className="section-pad bg-white">
@@ -36,7 +43,7 @@ export default function ServiceCards() {
             return (
               <Link
                 key={s.slug}
-                href={`/services/${s.slug}`}
+                href={getServiceUrl(s.slug)} // <--- اینجا اصلاح شد
                 className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-red/30 hover:shadow-xl"
               >
                 <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-white">
