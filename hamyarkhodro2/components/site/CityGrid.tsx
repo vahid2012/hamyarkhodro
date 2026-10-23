@@ -22,7 +22,7 @@ export default function CityGrid() {
           {TEHRAN_CITIES.map((c) => (
             <Link
               key={c.slug}
-              href={`/amdad/${c.slug}`}
+              href={`/emdad-khodro-${c.slug}`} // <--- اصلاح شد
               className="group rounded-xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-brand-red/40 hover:bg-red-50 hover:text-brand-red"
             >
               {c.name}
@@ -33,7 +33,7 @@ export default function CityGrid() {
           <h3 className="text-lg font-bold text-brand-navy">سایر خدمات ما</h3>
           <p className="mt-2 text-sm text-slate-600">
             علاوه بر استان تهران، خدمات امداد خودرو در استان‌های دیگر نیز فعال است:{' '}
-            <Link href="/amdad/semnan" className="font-semibold text-brand-red hover:underline">
+            <Link href="/emdad-khodro-semnan" className="font-semibold text-brand-red hover:underline">
               امداد خودرو سمنان
             </Link>{' '}
             و{' '}
