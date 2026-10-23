@@ -26,25 +26,17 @@ const nextConfig = {
         permanent: true,
       },
       
-      // --- ریدایرکت‌های سرویس‌ها ---
-      // امداد خودرو (A به E)
-      {
-        source: '/services/amdad-khodro',
-        destination: '/emdad-khodro',
-        permanent: true,
-      },
-      // خودروبر (طبق گفته شما بدون خط تیره)
-      {
-        source: '/services/khodrobar',
-        destination: '/khodrobar',
-        permanent: true,
-      },
-      // بقیه سرویس‌ها
-      {
-        source: '/services/:slug',
-        destination: '/:slug',
-        permanent: true,
-      },
+      // --- ریدایرکت‌های سرویس‌ها (همه به صورت تفکیک‌شده) ---
+      // ۱. امداد خودرو (از amdad به emdad)
+      { source: '/services/amdad-khodro', destination: '/emdad-khodro', permanent: true },
+      // ۲. خودروبر (از khodro-bor به khodrobar بدون خط تیره)
+      { source: '/services/khodro-bor', destination: '/khodrobar', permanent: true },
+      // ۳. بقیه سرویس‌ها
+      { source: '/services/yadak-kesh', destination: '/yadak-kesh', permanent: true },
+      { source: '/services/jarsaghil', destination: '/jarsaghil', permanent: true },
+      { source: '/services/battery', destination: '/battery', permanent: true },
+      { source: '/services/pancher', destination: '/pancher', permanent: true },
+      { source: '/services/haml-khodro-sefr', destination: '/haml-khodro-sefr', permanent: true },
     ];
   },
 
@@ -57,30 +49,23 @@ const nextConfig = {
           destination: '/city/:slug',
         },
         
-        // --- ری‌رایت‌های سرویس‌ها (به صورت تفکیک‌شده برای جلوگیری از خطا) ---
-        
-        // ۱. امداد خودرو
+        // --- ری‌رایت‌های سرویس‌ها ---
+        // آدرس جدید با E را به اسلاگ اصلی دیتابیس (با A) وصل می‌کنیم
         {
           source: '/emdad-khodro',
-          destination: '/services/amdad-khodro',
+          destination: '/services/amdad-khodro', 
         },
-        
-        // ۲. خودروبر (آدرس تمیز /khodrobar به اسلاگ اصلی وصل می‌شود)
+        // آدرس بدون خط تیره را به اسلاگ دیتابیس (با خط تیره) وصل می‌کنیم
         {
           source: '/khodrobar',
-          destination: '/services/khodrobar',
+          destination: '/services/khodro-bor', 
         },
-        // (اختیاری) اگر کسی آدرس با خط تیره را تایپ کرد، به همان دیتا وصل شود
-        {
-          source: '/khodro-bar',
-          destination: '/services/khodrobar', 
-        },
-
-        // ۳. بقیه سرویس‌ها با قاعده کلی (خودروبر از این لیست حذف شد)
-        {
-          source: '/:slug(yadak-kesh|jarsaghil|battery|pancher|haml-khodro-sefr)',
-          destination: '/services/:slug',
-        },
+        // بقیه سرویس‌ها
+        { source: '/yadak-kesh', destination: '/services/yadak-kesh' },
+        { source: '/jarsaghil', destination: '/services/jarsaghil' },
+        { source: '/battery', destination: '/services/battery' },
+        { source: '/pancher', destination: '/services/pancher' },
+        { source: '/haml-khodro-sefr', destination: '/services/haml-khodro-sefr' },
       ],
     };
   },
