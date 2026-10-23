@@ -5,6 +5,7 @@ import { BLOG_POSTS } from '@/data/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.url;
+  
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${base}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -12,15 +13,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   ];
 
-  const servicePages: MetadataRoute.Sitemap = SERVICES.map((s) => ({
-    url: `${base}/services/${s.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }));
+  // --- اصلاح سرویس‌ها ---
+  const servicePages: MetadataRoute.Sitemap = SERVICES.map((s) => {
+    // تعیین آدرس جدید برای هر سرویس
+    let newPath = `/${s.slug}`;
+    if (s.slug === 'amdad-khodro') newPath = '/emdad-khodro';
+    if (s.slug === 'khodro-bor') newPath = '/khodrobar';
 
+    return {
+      url: `${base}${newPath}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    };
+  });
+
+  // --- اصلاح شهرها ---
   const cityPages: MetadataRoute.Sitemap = CITIES.map((c) => ({
-    url: `${base}/amdad/${c.slug}`,
+    url: `${base}/emdad-khodro-${c.slug}`, // ساختار جدید شهرها
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: c.province === 'tehran' ? 0.9 : 0.7,
