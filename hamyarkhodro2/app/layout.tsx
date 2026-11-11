@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     'پنچرگیری',
     'حمل خودرو صفر',
   ],
+  verification: {
+    google: '5W-5H3xGLrLtZA90a1MoEy4pwuuVueeQcDc52K6nyJI',
+  },
   openGraph: {
     type: 'website',
     locale: 'fa_IR',
